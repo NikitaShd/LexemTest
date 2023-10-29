@@ -26,7 +26,7 @@ enum StateMshine {
   String,
   RMove,
   LMove,
-  AsigmentOper,
+  Addentetiv,
 };
 
 LexAnaluzet::LEX LexAnaluzet::getLexem(QString* data)
@@ -41,6 +41,7 @@ LexAnaluzet::LEX LexAnaluzet::getLexem(QString* data)
      char c = data->at(0).toLatin1();
      data->remove(0,1);
      switch (state) {
+
          case Start:
             if ( c == ' ' || c == '\r' ||c == '\t' ){/* Ignore this */}
             if ( c == '\n' ){ strtoke++; }
@@ -60,7 +61,7 @@ LexAnaluzet::LEX LexAnaluzet::getLexem(QString* data)
             else
             if (c == '{' || c == '}' ) {buf.push_back(c); lex.lexClass = DefineSumbols; lex.name = buf; off = true;}
             else
-            if (c == '+' || c == '-' ) {buf.push_back(c); state = AsigmentOper;}
+            if (c == '+' || c == '-' ) {buf.push_back(c); state = Addentetiv;}
             else
             if (c == '=') {buf.push_back(c); lex.lexClass = AsigmentOperator; lex.name = buf; off = true;}
             else
@@ -68,6 +69,7 @@ LexAnaluzet::LEX LexAnaluzet::getLexem(QString* data)
             else
             if (c == '"') {buf.push_back(c); state = String;}
          break;
+
          case Identificator:
           if(delimeters.contains(c))
             { data->push_front(c);
@@ -80,6 +82,7 @@ LexAnaluzet::LEX LexAnaluzet::getLexem(QString* data)
           else
             { buf.push_back(c); }
          break;
+
          case LMove:
             if( (c == '<' || c == '=' ) && MoveIncriment == 0){ buf.push_back(c);  MoveIncriment++; }
             else
@@ -91,6 +94,7 @@ LexAnaluzet::LEX LexAnaluzet::getLexem(QString* data)
             else
             { data->push_front(c); MoveIncriment = 0; lex.lexClass = Comparison; lex.name = buf; off = true; }
          break;
+
          case RMove:
             if( (c == '>' || c == '=' ) && MoveIncriment == 0 ){ buf.push_back(c);  MoveIncriment++; }
             else
@@ -102,6 +106,7 @@ LexAnaluzet::LEX LexAnaluzet::getLexem(QString* data)
             else
             { data->push_front(c); MoveIncriment = 0; lex.lexClass = Comparison; lex.name = buf; off = true; }
          break;
+
      }
   }
 
