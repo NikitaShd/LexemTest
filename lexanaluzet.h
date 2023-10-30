@@ -37,7 +37,7 @@ public:
     QString getName(LexClass name);
 private:
    int strtoke = 0;
-   QSet<char> delimeters = {'=','+','-','!','>','<',';','*','/','%',' ','"'};
+   QSet<char> delimeters = {'=','+','-','!','>','<',';','*','/','%',' ','"','\n'};
 };
 
 #endif // LEXANALUZET_H
